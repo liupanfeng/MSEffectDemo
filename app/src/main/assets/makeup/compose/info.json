@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Soft",
+    "cover": "9DF780C7-A598-4782-A2B0-431444B56A4E.png",
+    "translation": [
+      {
+        "originalText": "Soft",
+        "targetLanguage": "zh_CN",
+        "targetText": "轻柔"
+      }
+    ],
+    "uuid": "9DF780C7-A598-4782-A2B0-431444B56A4E",
+    "url": "9DF780C7-A598-4782-A2B0-431444B56A4E.1.makeup",
+    "grantLic": "9DF780C7-A598-4782-A2B0-431444B56A4E.lic",
+    "isCompose": true
+  },
+  {
+    "name": "Mix",
+    "cover": "88220A08-4ABA-4904-8DCB-5399B7078485.png",
+    "translation": [
+      {
+        "originalText": "Mix",
+        "targetLanguage": "zh_CN",
+        "targetText": "混血"
+      }
+    ],
+    "uuid": "88220A08-4ABA-4904-8DCB-5399B7078485",
+    "url": "88220A08-4ABA-4904-8DCB-5399B7078485.1.makeup",
+    "grantLic": "88220A08-4ABA-4904-8DCB-5399B7078485.lic",
+    "isCompose": true
+  }
+]
+
+

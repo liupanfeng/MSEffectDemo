@@ -1,0 +1,26 @@
+{
+  "fxInfoList": [
+    {
+      "name_Zh": "弹出",
+      "name": "Popup",
+      "fxFileName": "3ADAD718-359B-44AF-B33B-6E27E514B2ED.1.animatedstickeroutanimation",
+      "fxPackageId": "3ADAD718-359B-44AF-B33B-6E27E514B2ED",
+      "fxLicFileName": "3ADAD718-359B-44AF-B33B-6E27E514B2ED.lic",
+      "imageName": "3ADAD718-359B-44AF-B33B-6E27E514B2ED.webp"
+    },{
+      "name_Zh": "旋出",
+      "name": "Spin out",
+      "fxFileName": "6B243A23-A3FB-4709-A16A-CF0E0292616F.1.animatedstickeroutanimation",
+      "fxPackageId": "6B243A23-A3FB-4709-A16A-CF0E0292616F",
+      "fxLicFileName": "6B243A23-A3FB-4709-A16A-CF0E0292616F.lic",
+      "imageName": "6B243A23-A3FB-4709-A16A-CF0E0292616F.webp"
+    },{
+      "name_Zh": "淡出",
+      "name": "Fade Out",
+      "fxFileName": "409CA83D-76A5-4D2B-9522-5939A55FEC79.2.animatedstickeroutanimation",
+      "fxPackageId": "409CA83D-76A5-4D2B-9522-5939A55FEC79",
+      "fxLicFileName": "409CA83D-76A5-4D2B-9522-5939A55FEC79.lic",
+      "imageName": "409CA83D-76A5-4D2B-9522-5939A55FEC79.webp"
+    }
+  ]
+}

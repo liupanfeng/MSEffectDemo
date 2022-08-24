@@ -1,0 +1,26 @@
+{
+  "fxInfoList": [
+    {
+      "name_Zh": "闪烁",
+      "name": "Flicker",
+      "fxFileName": "20870C92-4466-4E6F-B5F9-CD8FA107ABA6.1.animatedstickeranimation",
+      "fxPackageId": "20870C92-4466-4E6F-B5F9-CD8FA107ABA6",
+      "fxLicFileName": "20870C92-4466-4E6F-B5F9-CD8FA107ABA6.lic",
+      "imageName": "20870C92-4466-4E6F-B5F9-CD8FA107ABA6.webp"
+    },{
+      "name_Zh": "钟摆",
+      "name": "pendulum",
+      "fxFileName": "CD0E020E-FE12-4536-8C88-C480AF92F4B7.4.animatedstickeranimation",
+      "fxPackageId": "CD0E020E-FE12-4536-8C88-C480AF92F4B7",
+      "fxLicFileName": "CD0E020E-FE12-4536-8C88-C480AF92F4B7.lic",
+      "imageName": "CD0E020E-FE12-4536-8C88-C480AF92F4B7.webp"
+    },{
+      "name_Zh": "雨刷",
+      "name": "Wiper",
+      "fxFileName": "E06A5FF1-0C7A-4FA1-93E9-5B1824EC6435.5.animatedstickeranimation",
+      "fxPackageId": "E06A5FF1-0C7A-4FA1-93E9-5B1824EC6435",
+      "fxLicFileName": "E06A5FF1-0C7A-4FA1-93E9-5B1824EC6435.lic",
+      "imageName": "E06A5FF1-0C7A-4FA1-93E9-5B1824EC6435.webp"
+    }
+  ]
+}

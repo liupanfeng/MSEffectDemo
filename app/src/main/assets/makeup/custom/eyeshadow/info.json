@@ -1,0 +1,112 @@
+[
+  {
+    "name": "Lavender eyeshadow",
+    "cover": "65067C7F-618D-4E48-9070-FF987DF608D7.png",
+    "translation": [
+      {
+        "originalText": "Lavender eyeshadow",
+        "targetLanguage": "zh_CN",
+        "targetText": "瑾色眼影"
+      }
+    ],
+    "uuid": "65067C7F-618D-4E48-9070-FF987DF608D7",
+    "url": "65067C7F-618D-4E48-9070-FF987DF608D7.1.makeup",
+    "isCompose": false,
+    "effectContent": {
+      "makeupArgs": [
+        {
+          "className": "Makeup Eyeshadow Package Id",
+          "makeupId": "Eyeshadow",
+          "uuid": "65067C7F-618D-4E48-9070-FF987DF608D7",
+          "makeupUrl": "65067C7F-618D-4E48-9070-FF987DF608D7.1.makeup",
+          "grantLic": "65067C7F-618D-4E48-9070-FF987DF608D7.lic",
+          "makeupRecommendColors": [
+            {
+              "makeupColor": "0.44313825,0.1490196,0.1960784313,1"
+            },
+            {
+              "makeupColor": "0.7490196,0.1490196,0.4470588,1"
+            },
+            {
+              "makeupColor": "0.80784313,0.388235294,0.133333,1"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "Filbert eyeshadow",
+    "cover": "FC5A4924-8B94-4C33-8556-8CF4218CE24F.png",
+    "translation": [
+      {
+        "originalText": "Filbert eyeshadow",
+        "targetLanguage": "zh_CN",
+        "targetText": "榛果眼影"
+      }
+    ],
+    "uuid": "FC5A4924-8B94-4C33-8556-8CF4218CE24F",
+    "url": "FC5A4924-8B94-4C33-8556-8CF4218CE24F.1.makeup",
+    "isCompose": false,
+    "effectContent": {
+      "makeupArgs": [
+        {
+          "className": "Makeup Eyeshadow Package Id",
+          "makeupId": "Eyeshadow",
+          "uuid": "FC5A4924-8B94-4C33-8556-8CF4218CE24F",
+          "makeupUrl": "FC5A4924-8B94-4C33-8556-8CF4218CE24F.1.makeup",
+          "grantLic": "FC5A4924-8B94-4C33-8556-8CF4218CE24F.lic",
+          "makeupRecommendColors": [
+            {
+              "makeupColor": "0.44313825,0.1490196,0.1960784313,1"
+            },
+            {
+              "makeupColor": "0.7490196,0.1490196,0.4470588,1"
+            },
+            {
+              "makeupColor": "0.80784313,0.388235294,0.133333,1"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "Mixed eyeshadow",
+    "cover": "54929321-0F6C-47B1-8996-5B63E3833812.png",
+    "translation": [
+      {
+        "originalText": "Filbert eyeshadow",
+        "targetLanguage": "zh_CN",
+        "targetText": "单色眼影"
+      }
+    ],
+    "uuid": "39B4E5AC-F067-436D-8EAF-738D3AD6730F",
+    "url": "39B4E5AC-F067-436D-8EAF-738D3AD6730F.1.makeup",
+    "isCompose": false,
+    "effectContent": {
+      "makeupArgs": [
+        {
+          "className": "Makeup Eyeshadow Package Id",
+          "makeupId": "Eyeshadow",
+          "uuid": "39B4E5AC-F067-436D-8EAF-738D3AD6730F",
+          "makeupUrl": "39B4E5AC-F067-436D-8EAF-738D3AD6730F.1.makeup",
+          "grantLic": "39B4E5AC-F067-436D-8EAF-738D3AD6730F.lic",
+          "makeupRecommendColors": [
+            {
+              "makeupColor": "0.44313825,0.1490196,0.1960784313,1"
+            },
+            {
+              "makeupColor": "0.7490196,0.1490196,0.4470588,1"
+            },
+            {
+              "makeupColor": "0.80784313,0.388235294,0.133333,1"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]
+
+

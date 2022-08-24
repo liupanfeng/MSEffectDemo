@@ -1,0 +1,28 @@
+{
+  "fxInfoList": [
+    {
+      "name_Zh": "放大",
+      "name": "zoom in",
+      "fxFileName": "8007D7BA-88E9-4FB0-98C4-260AD5714BAF.1.animatedstickerinanimation",
+      "fxPackageId": "8007D7BA-88E9-4FB0-98C4-260AD5714BAF",
+      "fxLicFileName": "8007D7BA-88E9-4FB0-98C4-260AD5714BAF.lic",
+      "imageName": "8007D7BA-88E9-4FB0-98C4-260AD5714BAF.webp"
+    },
+    {
+      "name_Zh": "弹入",
+      "name": "Pop Under",
+      "fxFileName": "CC2B7B7D-39D2-4432-898E-AC62C66188B8.1.animatedstickerinanimation",
+      "fxPackageId": "CC2B7B7D-39D2-4432-898E-AC62C66188B8",
+      "fxLicFileName": "CC2B7B7D-39D2-4432-898E-AC62C66188B8.lic",
+      "imageName": "CC2B7B7D-39D2-4432-898E-AC62C66188B8.webp"
+    },
+    {
+      "name_Zh": "缩小",
+      "name": "zoom out",
+      "fxFileName": "ECF06228-5D1F-4728-80FB-0B1943A60C23.1.animatedstickerinanimation",
+      "fxPackageId": "ECF06228-5D1F-4728-80FB-0B1943A60C23",
+      "fxLicFileName": "ECF06228-5D1F-4728-80FB-0B1943A60C23.lic",
+      "imageName": "ECF06228-5D1F-4728-80FB-0B1943A60C23.webp"
+    }
+  ]
+}
