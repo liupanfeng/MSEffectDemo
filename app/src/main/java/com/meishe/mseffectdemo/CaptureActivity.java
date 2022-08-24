@@ -214,21 +214,6 @@ public class CaptureActivity extends AppCompatActivity {
                     mNvsVideoFrameInfo.pixelFormat = NvsVideoFrameInfo.VIDEO_FRAME_PIXEL_FROMAT_NV21;
 
 
-//                    Bitmap pictureBitmap = Bitmap.createBitmap(mNvsVideoFrameInfo.frameWidth,
-//                            mNvsVideoFrameInfo.frameHeight, Bitmap.Config.ARGB_8888);
-//                    if (mEffects.size() > 0) {
-//                        //前置摄像头  检测方向是270
-//                        ByteBuffer byteBufferResult = mEffectRenderCore.renderEffects(mEffects.toArray(new NvsEffect[mEffects.size()]),
-//                                data, mNvsVideoFrameInfo, 270,
-//                                NvsVideoFrameInfo.VIDEO_FRAME_PIXEL_FROMAT_RGBA, false,
-//                                (System.currentTimeMillis() - mStartPreviewTime) * 1000, 0);
-//
-//                        if (null != byteBufferResult) {
-//                            pictureBitmap.copyPixelsFromBuffer(byteBufferResult);
-//                            Bitmap bitmap = adjustBitmapRotation(pictureBitmap, 90);
-//                            mBinding.imageView.setImageBitmap(bitmap);
-//                        }
-//                    }
 
 
 
