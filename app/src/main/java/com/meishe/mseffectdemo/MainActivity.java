@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.meicam.effect.sdk.NvsEffectSdkContext;
 import com.meishe.mseffectdemo.databinding.ActivityMainBinding;
@@ -33,9 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},100);
-
         initData();
-
         initListener();
     }
 
@@ -43,7 +40,13 @@ public class MainActivity extends AppCompatActivity {
      * 初始化Data
      */
     private void initData() {
+        initModel();
+    }
 
+    /**
+     * 初始化模型文件
+     */
+    private void initModel() {
         String modelPath = null;
         String licensePath = null;
         String faceModelName = null;
@@ -84,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
                 halfBodyPath, null, NvsEffectSdkContext.HUMAN_DETECTION_FEATURE_SEGMENTATION_HALF_BODY);
         Log.e(TAG, "ms halfBodySuccess-->" + halfBodySuccess);
     }
+
+
 
     private void initListener() {
         binding.btnCapture.setOnClickListener(new View.OnClickListener() {

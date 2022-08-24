@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -31,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -41,59 +39,74 @@ public class CaptureActivity extends AppCompatActivity {
 
     private ActivityCaptureBinding mBinding;
     private SurfaceHolder mSurfaceHolder;
+    /**
+     * 视频通道帮助类
+     */
     private MSVideoChannel mMsVideoChannel;
     private final static String TAG = "CaptureActivity";
-    public static final int AspectRatio_9v16 = 4;
 
+    /**
+     * 待渲染的特技集合
+     */
+    private List<NvsEffect> mEffects = new ArrayList<>();
 
-    private List<NvsEffect> effects = new ArrayList<>();
-    private NvsVideoResolution mCurrentVideoResolution = new NvsVideoResolution();
     private NvsEffectSdkContext mNvsEffectSdkContext;
     private NvsEffectRenderCore mEffectRenderCore;
 
     private NvsVideoFrameInfo mNvsVideoFrameInfo=new NvsVideoFrameInfo();
-    private long mStartPreviewTime;
 
-    private String mFilterId;
     private NvsVideoEffect mFilter;
-
     private boolean isShowImageView;
+
+    private long mStartPreviewTime;
+    private String mFilterId;
     private String mSceneId;
+    private Bitmap mPictureBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /*设置全屏*/
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setFullScreen();
         mBinding= ActivityCaptureBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
 
+
         mNvsEffectSdkContext= NvsEffectSdkContext.getInstance();
         mEffectRenderCore = mNvsEffectSdkContext.createEffectRenderCore();
-
         mEffectRenderCore.initialize(NvsEffectRenderCore.NV_EFFECT_CORE_FLAGS_SUPPORT_8K
                 |NvsEffectRenderCore.NV_EFFECT_CORE_FLAGS_CREATE_GLCONTEXT_IF_NEED|
                 NvsEffectRenderCore.NV_EFFECT_CORE_FLAGS_IN_SINGLE_GLTHREAD);
 
 
         initSurfaceView();
+        initPackageEffect();
+        initARSceneEffect();
+        initListener();
 
-        // 安装资源包
-        mFilterId = DataHelper.createStickerItem("assets:/1AACCE79-7EAB-4B2E-AE9B-E53A02AFC055.3.videofx", NvsAssetPackageManager.ASSET_PACKAGE_TYPE_VIDEOFX);
+    }
 
-        if (mFilter == null) {
-            NvsRational nvsRational = new NvsRational(9,16);
-            mFilter = mNvsEffectSdkContext.createVideoEffect(mFilterId, nvsRational);
-            effects.add(mFilter);
-        }
+    private void initListener() {
+        mBinding.btnStartRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mBinding.imageView.setVisibility(View.VISIBLE);
+                isShowImageView=true;
+            }
+        });
 
+        mBinding.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mBinding.imageView.setVisibility(View.GONE);
+                isShowImageView=false;
+            }
+        });
+    }
 
-        mSceneId =  DataHelper.createStickerItem("assets:/9C917EE3-A1B0-4B5D-B50F-9624A6824A6B.arscene", NvsAssetPackageManager.ASSET_PACKAGE_TYPE_ARSCENE);
-
-
+    /**
+     * 初始化人脸特技  包含 美颜 美型 美白 磨皮等
+     */
+    private void initARSceneEffect() {
         NvsRational nvsRational = new NvsRational(9,16);
         NvsVideoEffect nvsVideoEffect = mNvsEffectSdkContext.createVideoEffect("AR Scene", nvsRational);
 
@@ -132,6 +145,10 @@ public class CaptureActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * 初始化道具特效
+         */
+        mSceneId =  DataHelper.createStickerItem("assets:/9C917EE3-A1B0-4B5D-B50F-9624A6824A6B.arscene", NvsAssetPackageManager.ASSET_PACKAGE_TYPE_ARSCENE);
 
         nvsVideoEffect.setBooleanVal("Single Buffer Mode", false);
         nvsVideoEffect.setBooleanVal("Beauty Effect", true);
@@ -147,41 +164,47 @@ public class CaptureActivity extends AppCompatActivity {
         nvsVideoEffect.setBooleanVal("Default Sharpen Enabled", true);
         nvsVideoEffect.setStringVal("Scene Id", mSceneId);
 
-        effects.add(nvsVideoEffect);
-
-
-        mBinding.btnStartRecord.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mBinding.imageView.setVisibility(View.VISIBLE);
-                isShowImageView=true;
-            }
-        });
-
-        mBinding.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mBinding.imageView.setVisibility(View.GONE);
-                isShowImageView=false;
-            }
-        });
-
+        mEffects.add(nvsVideoEffect);
     }
 
+    /**
+     * 添加包类型特效 到待渲染的集合中
+     */
+    private void initPackageEffect() {
+        // 安装资源包
+        mFilterId = DataHelper.createStickerItem("assets:/1AACCE79-7EAB-4B2E-AE9B-E53A02AFC055.3.videofx", NvsAssetPackageManager.ASSET_PACKAGE_TYPE_VIDEOFX);
+
+        if (mFilter == null) {
+            NvsRational nvsRational = new NvsRational(9,16);
+            mFilter = mNvsEffectSdkContext.createVideoEffect(mFilterId, nvsRational);
+            mEffects.add(mFilter);
+        }
+    }
+
+    private void setFullScreen() {
+        /*设置全屏*/
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    /**
+     * 初始化SurfaceView 并设置相机预览数据回调
+     */
     private void initSurfaceView() {
         mBinding.surfaceview.setKeepScreenOn(true);
         mSurfaceHolder = mBinding.surfaceview.getHolder();
         /*设置surface不需要自己的维护缓存区*/
         mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         mSurfaceHolder.addCallback(new MSSurfaceCallback());
-
         mMsVideoChannel = MSVideoChannel.getInstance();
-
         mMsVideoChannel.setCallback(new MSVideoChannel.Callback() {
             @Override
             public void videoData(byte[] data) {
                 if (isShowImageView) {
-
+                    /**
+                     * 输入buffer数据 类型描述信息
+                     */
                     mNvsVideoFrameInfo.frameWidth = mMsVideoChannel.getWidth();
                     mNvsVideoFrameInfo.frameHeight = mMsVideoChannel.getHeight();
                     Log.d(TAG, "------videoData------mNvsVideoFrameInfo.frameWidth="+mNvsVideoFrameInfo.frameWidth+" mNvsVideoFrameInfo.frameHeight="+mNvsVideoFrameInfo.frameHeight);
@@ -191,60 +214,59 @@ public class CaptureActivity extends AppCompatActivity {
                     mNvsVideoFrameInfo.pixelFormat = NvsVideoFrameInfo.VIDEO_FRAME_PIXEL_FROMAT_NV21;
 
 
-                    Bitmap pictureBitmap = Bitmap.createBitmap(mNvsVideoFrameInfo.frameWidth,
-                            mNvsVideoFrameInfo.frameHeight, Bitmap.Config.ARGB_8888);
+//                    Bitmap pictureBitmap = Bitmap.createBitmap(mNvsVideoFrameInfo.frameWidth,
+//                            mNvsVideoFrameInfo.frameHeight, Bitmap.Config.ARGB_8888);
+//                    if (mEffects.size() > 0) {
+//                        //前置摄像头  检测方向是270
+//                        ByteBuffer byteBufferResult = mEffectRenderCore.renderEffects(mEffects.toArray(new NvsEffect[mEffects.size()]),
+//                                data, mNvsVideoFrameInfo, 270,
+//                                NvsVideoFrameInfo.VIDEO_FRAME_PIXEL_FROMAT_RGBA, false,
+//                                (System.currentTimeMillis() - mStartPreviewTime) * 1000, 0);
+//
+//                        if (null != byteBufferResult) {
+//                            pictureBitmap.copyPixelsFromBuffer(byteBufferResult);
+//                            Bitmap bitmap = adjustBitmapRotation(pictureBitmap, 90);
+//                            mBinding.imageView.setImageBitmap(bitmap);
+//                        }
+//                    }
 
-                    if (effects.size() > 0) {
-                        //前置摄像头  检测方向是270
-                        ByteBuffer byteBufferResult = mEffectRenderCore.renderEffects(effects.toArray(new NvsEffect[effects.size()]),
-                                data, mNvsVideoFrameInfo, 270,
-                                NvsVideoFrameInfo.VIDEO_FRAME_PIXEL_FROMAT_RGBA, false,
-                                (System.currentTimeMillis() - mStartPreviewTime) * 1000, 0);
 
-                        if (null != byteBufferResult) {
-                            pictureBitmap.copyPixelsFromBuffer(byteBufferResult);
-                            Bitmap bitmap = adjustBitmapRotation(pictureBitmap, 90);
-                            mBinding.imageView.setImageBitmap(bitmap);
+
+                    Observable.just(mEffects).map(new Function<List<NvsEffect>, Bitmap>() {
+                        @Override
+                        public Bitmap apply(List<NvsEffect> nvsEffects) throws Exception {
+
+                             mPictureBitmap = Bitmap.createBitmap(mNvsVideoFrameInfo.frameWidth,
+                                    mNvsVideoFrameInfo.frameHeight, Bitmap.Config.ARGB_8888);
+
+                            if (mEffects.size() > 0) {
+                                ByteBuffer byteBufferResult = mEffectRenderCore.renderEffects(mEffects.toArray(new NvsEffect[mEffects.size()]),
+                                        data, mNvsVideoFrameInfo, 270,
+                                        NvsVideoFrameInfo.VIDEO_FRAME_PIXEL_FROMAT_RGBA, false,
+                                        (System.currentTimeMillis() - mStartPreviewTime) * 1000, 0);
+
+                                if (null != byteBufferResult) {
+                                    mPictureBitmap.copyPixelsFromBuffer(byteBufferResult);
+                                    Bitmap bitmap = adjustBitmapRotation(mPictureBitmap, 90);
+                                    return bitmap;
+                                }
+                            }
+
+                            return mPictureBitmap;
                         }
-                    }
-
-
-
-//                    Observable.just(effects).map(new Function<List<NvsEffect>, Bitmap>() {
-//                        @Override
-//                        public Bitmap apply(List<NvsEffect> nvsEffects) throws Exception {
-//
-//                            Bitmap pictureBitmap = Bitmap.createBitmap(mNvsVideoFrameInfo.frameWidth,
-//                                    mNvsVideoFrameInfo.frameHeight, Bitmap.Config.ARGB_8888);
-//
-//                            if (effects.size() > 0) {
-//
-//
-//                                ByteBuffer byteBufferResult = mEffectRenderCore.renderEffects(effects.toArray(new NvsEffect[effects.size()]),
-//                                        data, mNvsVideoFrameInfo, 0,
-//                                        NvsVideoFrameInfo.VIDEO_FRAME_PIXEL_FROMAT_RGBA, false,
-//                                        (System.currentTimeMillis() - mStartPreviewTime) * 1000, 0);
-//
-//                                if (null != byteBufferResult) {
-//                                    pictureBitmap.copyPixelsFromBuffer(byteBufferResult);
-//                                }
-//                            }
-//
-//                            return pictureBitmap;
-//                        }
-//                    }).observeOn(Schedulers.single()).observeOn(AndroidSchedulers.mainThread()).doOnNext(new Consumer<Bitmap>() {
-//                        @Override
-//                        public void accept(Bitmap bitmap) throws Exception {
-//                            if (bitmap!=null){
-//                                mBinding.imageView.setImageBitmap(bitmap);
-//                            }
-//                        }
-//                    }).doOnError(new Consumer<Throwable>() {
-//                        @Override
-//                        public void accept(Throwable throwable) throws Exception {
-//                            Log.e(TAG, throwable.getMessage());
-//                        }
-//                    }).subscribe();
+                    }).observeOn(Schedulers.single()).observeOn(AndroidSchedulers.mainThread()).doOnNext(new Consumer<Bitmap>() {
+                        @Override
+                        public void accept(Bitmap bitmap) throws Exception {
+                            if (bitmap!=null){
+                                mBinding.imageView.setImageBitmap(bitmap);
+                            }
+                        }
+                    }).doOnError(new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            Log.e(TAG, throwable.getMessage());
+                        }
+                    }).subscribe();
 
                 }
             }
