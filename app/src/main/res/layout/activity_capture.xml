@@ -18,7 +18,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:text="开始录制"
+        android:text="渲染特效"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
